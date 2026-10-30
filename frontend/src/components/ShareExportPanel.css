@@ -1,0 +1,206 @@
+/* frontend/src/components/ShareExportPanel.css */
+/* Styles for the Share & Export panel inside the itinerary view. */
+
+.share-export-panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.sep-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sep-header-icon {
+  color: #6366f1;
+}
+
+.sep-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.sep-section {
+  margin-bottom: 1rem;
+}
+
+.sep-section:last-child {
+  margin-bottom: 0;
+}
+
+.sep-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 0.6rem 0;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+
+.sep-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+}
+
+.sep-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.sep-btn-primary {
+  background: linear-gradient(135deg, #6366f1, #818cf8);
+  color: #fff;
+}
+
+.sep-btn-primary:hover:not(:disabled) {
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
+}
+
+.sep-btn-icon {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 0.4rem;
+  border-radius: 6px;
+}
+
+.sep-btn-icon:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.sep-btn-danger-outline {
+  background: transparent;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+  font-size: 0.78rem;
+  margin-top: 0.5rem;
+}
+
+.sep-btn-danger-outline:hover:not(:disabled) {
+  background: #fef2f2;
+}
+
+.sep-btn-export {
+  background: #f8fafc;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  flex: 1;
+  justify-content: center;
+}
+
+.sep-btn-export:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.sep-export-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Share URL Row ────────────────────────────────────────────────────── */
+
+.sep-share-active {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sep-share-url-row {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.sep-share-url-input {
+  flex: 1;
+  font-size: 0.78rem;
+  font-family: 'Courier New', monospace;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #f8fafc;
+  color: #475569;
+  outline: none;
+  min-width: 0;
+}
+
+.sep-share-url-input:focus {
+  border-color: #6366f1;
+}
+
+/* ── Feedback ─────────────────────────────────────────────────────────── */
+
+.sep-copied-toast {
+  font-size: 0.78rem;
+  color: #16a34a;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sep-copied-icon {
+  color: #16a34a;
+}
+
+.sep-error {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: #ef4444;
+  margin: 0.5rem 0 0 0;
+}
+
+/* ── Spin animation ───────────────────────────────────────────────────── */
+
+.sep-spin {
+  animation: sep-spin-anim 1s linear infinite;
+}
+
+@keyframes sep-spin-anim {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .sep-export-buttons {
+    flex-direction: column;
+  }
+
+  .sep-share-url-row {
+    flex-direction: column;
+  }
+
+  .sep-share-url-input {
+    font-size: 0.72rem;
+  }
+}
+

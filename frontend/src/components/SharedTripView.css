@@ -1,0 +1,355 @@
+/* frontend/src/components/SharedTripView.css */
+/* Styles for the public read-only shared trip view. */
+
+.stv-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.stv-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+
+.stv-hero {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 2rem 1.75rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.stv-hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.stv-hero-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.02em;
+}
+
+.stv-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  font-size: 0.82rem;
+  color: #c7d2fe;
+}
+
+.stv-hero-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.stv-vibes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.stv-vibe-tag {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+/* ── Summary Card ──────────────────────────────────────────────────────── */
+
+.stv-summary-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.stv-summary-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.5;
+}
+
+/* ── Day Cards ─────────────────────────────────────────────────────────── */
+
+.stv-days {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stv-day-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.stv-day-header {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: white;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.stv-day-number {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.stv-day-theme {
+  font-size: 0.92rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.stv-day-date {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* ── Activities ────────────────────────────────────────────────────────── */
+
+.stv-activities {
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stv-activity {
+  background: #fafbfc;
+  border: 1px solid #f1f5f9;
+  border-radius: 8px;
+  padding: 0.7rem 0.85rem;
+}
+
+.stv-activity.stv-dining {
+  background: #fefce8;
+  border-color: #fef08a;
+}
+
+.stv-act-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+
+.stv-act-header strong {
+  font-size: 0.88rem;
+  color: #1e293b;
+}
+
+.stv-slot-icon {
+  flex-shrink: 0;
+}
+
+.stv-slot-morning {
+  color: #f59e0b;
+}
+
+.stv-slot-afternoon {
+  color: #f97316;
+}
+
+.stv-slot-evening {
+  color: #6366f1;
+}
+
+.stv-slot-dining {
+  color: #16a34a;
+}
+
+.stv-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: #eef2ff;
+  color: #6366f1;
+  border-radius: 10px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.stv-cuisine-tag {
+  background: #ecfdf5;
+  color: #16a34a;
+  border-radius: 10px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.stv-act-desc {
+  font-size: 0.82rem;
+  color: #475569;
+  line-height: 1.45;
+  margin: 0 0 0.35rem 0;
+}
+
+.stv-act-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.stv-act-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stv-act-cost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* ── Route & Tip ───────────────────────────────────────────────────────── */
+
+.stv-route-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: #f1f5f9;
+  font-size: 0.78rem;
+  color: #475569;
+}
+
+.stv-route-summary span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.stv-daily-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.78rem;
+  color: #0f766e;
+  background: #f0fdfa;
+  border-top: 1px solid #ccfbf1;
+}
+
+/* ── Packing ───────────────────────────────────────────────────────────── */
+
+.stv-packing {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+}
+
+.stv-packing h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+}
+
+.stv-packing ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.stv-packing li {
+  font-size: 0.82rem;
+  color: #475569;
+  margin-bottom: 0.3rem;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+
+.stv-footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin-top: 1.5rem;
+}
+
+/* ── Empty ─────────────────────────────────────────────────────────────── */
+
+.stv-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* ── Spin ──────────────────────────────────────────────────────────────── */
+
+.stv-spin {
+  animation: stv-spin-anim 1s linear infinite;
+  color: #6366f1;
+}
+
+@keyframes stv-spin-anim {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .stv-hero-title {
+    font-size: 1.2rem;
+  }
+
+  .stv-hero-meta {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+}
+

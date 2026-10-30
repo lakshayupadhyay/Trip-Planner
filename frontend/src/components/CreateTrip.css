@@ -1,0 +1,797 @@
+/* CreateTrip.css — Styles for the multi-step trip creation form */
+
+/* ===== Container ===== */
+.create-trip-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== Progress Bar ===== */
+.progress-wrapper {
+  margin-bottom: 2rem;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.4rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* ===== Card ===== */
+.form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  min-height: 400px;
+}
+
+/* ===== Step Header ===== */
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.step-header-icon {
+  color: #667eea;
+}
+
+.step-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #1a1a2e;
+}
+
+/* ===== Form Fields ===== */
+.form-field {
+  margin-bottom: 1.25rem;
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.4rem;
+}
+
+.form-field .field-hint {
+  font-size: 0.78rem;
+  color: #999;
+  margin-top: 0.25rem;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  color: #333;
+  background: #fafafa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+  background: #fff;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.char-count {
+  text-align: right;
+  font-size: 0.78rem;
+  color: #999;
+  margin-top: 0.25rem;
+}
+
+/* Two-column layout for date fields */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ===== Travel Style Cards (Card Grid) ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.style-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 0.85rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fafafa;
+  font-size: 0.85rem;
+  color: #555;
+  user-select: none;
+}
+
+.style-card:hover {
+  border-color: #667eea;
+  background: #f0f2ff;
+}
+
+.style-card.selected {
+  border-color: #667eea;
+  background: #eef0ff;
+  color: #667eea;
+  font-weight: 600;
+}
+
+.style-card .style-emoji {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+/* ===== Interest & Dietary Chips ===== */
+.chips-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.interest-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.85rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  background: #fafafa;
+  color: #555;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.interest-chip:hover {
+  border-color: #667eea;
+  background: #f0f2ff;
+}
+
+.interest-chip.selected {
+  border-color: #667eea;
+  background: #667eea;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ===== Review Section ===== */
+.review-section {
+  background: #f8f9ff;
+  border: 1px solid #dde1ff;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.review-section h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #667eea;
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.3rem 0;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #eee;
+  gap: 1rem;
+}
+
+.review-row:last-child {
+  border-bottom: none;
+}
+
+.review-row .review-label {
+  color: #888;
+  flex-shrink: 0;
+}
+
+.review-row .review-value {
+  color: #333;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* ===== Buttons ===== */
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.75rem;
+  gap: 1rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover {
+  background: #eef0ff;
+}
+
+/* ===== Validation Error ===== */
+.validation-error {
+  color: #e53e3e;
+  font-size: 0.82rem;
+  margin-top: 0.3rem;
+}
+
+/* ===== Success & Error Messages ===== */
+.success-message {
+  background: #f0fff4;
+  border: 1px solid #9ae6b4;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  color: #276749;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.success-message h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  color: #c53030;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* ===== Spinner ===== */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .create-trip-container {
+    padding: 1rem;
+  }
+}
+
+/* ===== Recommendations & AI Assist ===== */
+.btn-ai-assist {
+  background: none;
+  border: none;
+  color: #6366f1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.35rem 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+  transition: color 0.2s;
+}
+
+.btn-ai-assist:hover {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+
+.dest-inspiration-panel {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.dest-inspiration-panel .form-row {
+  align-items: flex-end;
+}
+
+.recommendations-preview-section {
+  margin-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.25rem;
+}
+
+.recommendations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.recommendations-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #1e293b;
+}
+
+.rec-subtitle {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0.2rem 0 0 0;
+}
+
+.btn-sm {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+.recommendations-loading {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  color: #475569;
+  margin: 1rem 0;
+}
+
+.recommendations-loading .spinner {
+  color: #6366f1;
+  margin-bottom: 0.5rem;
+}
+
+.recommendations-loading p {
+  margin: 0.25rem 0;
+  font-weight: 600;
+}
+
+.loading-subtext {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  display: block;
+  margin-top: 0.3rem;
+}
+
+.recommendations-empty {
+  background: #f8fafc;
+  border: 1px dashed #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  color: #64748b;
+  margin: 1rem 0;
+}
+
+.recommendations-empty p {
+  margin: 0.5rem 0 0.25rem 0;
+  font-weight: 600;
+}
+
+.recommendations-empty span {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  display: block;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.recommendation-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: left;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.destination-card {
+  border-color: #bae6fd;
+  background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  border: 1px solid;
+}
+
+.cost-pill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #166534;
+  background: #dcfce7;
+  padding: 0.2rem 0.5rem;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+
+.meta-sep {
+  color: #cbd5e1;
+}
+
+.card-desc {
+  font-size: 0.83rem;
+  color: #475569;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.match-reason-box {
+  background: #eff6ff;
+  border-left: 3px solid #3b82f6;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.78rem;
+  color: #1e40af;
+  display: flex;
+  gap: 0.4rem;
+  align-items: flex-start;
+}
+
+.match-icon {
+  color: #2563eb;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.highlights-list {
+  font-size: 0.78rem;
+  color: #334155;
+}
+
+.highlights-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.highlights-list ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.highlights-list li {
+  margin-bottom: 0.15rem;
+}
+
+.tips-footer {
+  font-size: 0.75rem;
+  color: #854d0e;
+  background: #fef9c3;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  display: flex;
+  gap: 0.35rem;
+  align-items: flex-start;
+  margin-top: auto;
+}
+
+.tip-icon {
+  color: #ca8a04;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.best-time {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-select-dest {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-select-dest:hover {
+  background: #0369a1;
+}
+
+/* ===== Activity 4.3: Vibe Selection System ===== */
+.vibe-instruction-text {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0 0 0.85rem 0;
+  line-height: 1.4;
+}
+
+.vibe-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.vibe-card {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.vibe-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.vibe-card.primary-active {
+  border-color: #6366f1;
+  background: linear-gradient(180deg, #f5f7ff 0%, #ffffff 100%);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.2);
+}
+
+.vibe-card.secondary-active {
+  border-color: #10b981;
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+}
+
+.vibe-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.vibe-icon-pill {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vibe-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 20px;
+}
+
+.vibe-badge.primary {
+  background: #6366f1;
+  color: #ffffff;
+}
+
+.vibe-badge.secondary {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.vibe-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.vibe-desc {
+  font-size: 0.77rem;
+  color: #64748b;
+  line-height: 1.35;
+  margin: 0 0 0.75rem 0;
+  flex-grow: 1;
+}
+
+.vibe-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.vibe-pace-tag {
+  font-size: 0.7rem;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  align-self: flex-start;
+  text-transform: capitalize;
+}
+
+.vibe-btn-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+}
+
+.vibe-action-btn {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+  border-radius: 6px;
+  padding: 0.3rem 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.vibe-action-btn:hover:not(:disabled) {
+  border-color: #6366f1;
+  color: #6366f1;
+  background: #eef2ff;
+}
+
+.vibe-action-btn.selected-primary {
+  background: #6366f1;
+  color: #ffffff;
+  border-color: #6366f1;
+}
+
+.vibe-action-btn.secondary-btn:hover:not(:disabled) {
+  border-color: #10b981;
+  color: #10b981;
+  background: #ecfdf5;
+}
+
+.vibe-action-btn.secondary-btn.selected-secondary {
+  background: #10b981;
+  color: #ffffff;
+  border-color: #10b981;
+}
+
+.vibe-action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

@@ -1,0 +1,36 @@
+# backend/requirements.txt
+# ─────────────────────────────────────────────
+# Python dependencies for the FastAPI backend.
+#
+# HOW TO INSTALL:
+#   cd backend
+#   python -m venv .venv
+#   .venv\Scripts\activate        # Windows
+#   pip install -r requirements.txt
+# ─────────────────────────────────────────────
+
+# ── Web Framework & Server ────────────────────
+fastapi>=0.115.0            # FastAPI web framework
+uvicorn>=0.32.0             # ASGI server to run FastAPI
+
+# ── Supabase ──────────────────────────────────
+supabase>=2.10.0            # Official Supabase Python client
+python-dotenv>=1.0.1        # Loads .env file into environment variables
+
+# ── Data Validation ───────────────────────────
+pydantic>=2.10.0            # Data models and validation
+pydantic-settings>=2.6.0    # Hierarchical settings management
+email-validator>=2.2.0      # Required for Pydantic EmailStr validation
+
+# ── AI & LLM Integration ─────────────────────
+google-genai>=2.0.0         # Official Google GenAI Python SDK
+groq>=1.7.0                 # Official Groq Python SDK
+
+# ── HTTP Client ───────────────────────────────
+httpx>=0.27.0               # Async HTTP client (used by supabase-py internally)
+
+# ── PDF Generation ────────────────────────────
+reportlab>=5.0.0            # PDF document generation for export
+
+# ── Testing ───────────────────────────────────
+pytest>=8.0.0               # Unit test framework
