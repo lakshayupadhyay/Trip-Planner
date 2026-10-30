@@ -17,7 +17,7 @@ services:
       - key: GROQ_API_KEY
         sync: false
       - key: GEMINI_MODEL
-        value: "gemini-3.8-flash"
+        value: "gemini-3.1-flash-lite"
       - key: GROQ_MODEL
         value: "llama-3.3-70b-versatile"
       - key: ALLOWED_ORIGINS

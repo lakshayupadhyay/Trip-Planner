@@ -793,13 +793,53 @@ export default function CreateTrip({
             </motion.div>
           )}
 
+          {submitError && (
+            <div
+              style={{
+                backgroundColor: '#fef2f2',
+                border: '1px solid #fecaca',
+                color: '#b91c1c',
+                borderRadius: '10px',
+                padding: '0.75rem 1rem',
+                fontSize: '0.85rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                marginTop: '1.5rem',
+              }}
+            >
+              <AlertCircle size={16} />
+              <span>{submitError}</span>
+            </div>
+          )}
+
+          {isSubmitting && (
+            <div
+              style={{
+                backgroundColor: '#eff6ff',
+                border: '1px solid #bfdbfe',
+                color: '#1d4ed8',
+                borderRadius: '10px',
+                padding: '0.65rem 1rem',
+                fontSize: '0.82rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                marginTop: '1.25rem',
+              }}
+            >
+              <Loader2 size={15} className="spin" />
+              <span>AI is crafting your personalized itinerary and optimizing routes (approx 5-10s)...</span>
+            </div>
+          )}
+
           {/* Action Buttons Row */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginTop: '2rem',
+              marginTop: '1.5rem',
               paddingTop: '1.25rem',
               borderTop: '1px solid #f1f5f9',
             }}

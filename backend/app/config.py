@@ -115,7 +115,7 @@ class Settings(BaseSettings):
         description="Primary AI provider: 'gemini', 'groq', 'huggingface', 'ollama'",
     )
     GEMINI_API_KEY: str | None = Field(default=None, description="Google Gemini API key")
-    GEMINI_MODEL: str = Field(default="gemini-3.8-flash", description="Google Gemini model identifier")
+    GEMINI_MODEL: str = Field(default="gemini-3.1-flash-lite", description="Google Gemini model identifier")
     GROQ_API_KEY: str | None = Field(default=None, description="Groq Cloud API key")
     GROQ_MODEL: str = Field(default="llama-3.3-70b-versatile", description="Groq model identifier")
     HUGGINGFACE_API_KEY: str | None = Field(default=None, description="Hugging Face API token")
