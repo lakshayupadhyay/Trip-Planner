@@ -151,6 +151,16 @@ class Settings(BaseSettings):
             combined = list(dict.fromkeys(self.ALLOWED_ORIGINS + parsed))
             object.__setattr__(self, "ALLOWED_ORIGINS", combined)
 
+        # Automatically include FRONTEND_URL in ALLOWED_ORIGINS
+        if self.FRONTEND_URL and self.FRONTEND_URL not in self.ALLOWED_ORIGINS:
+            combined = list(dict.fromkeys(self.ALLOWED_ORIGINS + [self.FRONTEND_URL]))
+            object.__setattr__(self, "ALLOWED_ORIGINS", combined)
+
+        # Automatically include BACKEND_URL in ALLOWED_ORIGINS (for same-origin requests)
+        if self.BACKEND_URL and self.BACKEND_URL not in self.ALLOWED_ORIGINS:
+            combined = list(dict.fromkeys(self.ALLOWED_ORIGINS + [self.BACKEND_URL]))
+            object.__setattr__(self, "ALLOWED_ORIGINS", combined)
+
         # Production Environment Validation
         if self.ENVIRONMENT == "production":
             if self.DEBUG is True:
