@@ -133,11 +133,15 @@ class Settings(BaseSettings):
     @field_validator("ALLOWED_ORIGINS", mode="before")
     @classmethod
     def parse_allowed_origins(cls, value: Any) -> list[str]:
-        """Allow origins to be defined as comma-separated string or list."""
+        """Allow origins to be defined as comma-separated string or list.
+
+        Strips whitespace AND trailing slashes from each origin to prevent
+        mismatches between 'https://example.com' and 'https://example.com/'.
+        """
         if isinstance(value, str):
-            return [o.strip() for o in value.split(",") if o.strip()]
+            return [o.strip().rstrip("/") for o in value.split(",") if o.strip()]
         if isinstance(value, (list, tuple)):
-            return [str(o).strip() for o in value if str(o).strip()]
+            return [str(o).strip().rstrip("/") for o in value if str(o).strip()]
         return value
 
     @model_validator(mode="after")
@@ -152,13 +156,16 @@ class Settings(BaseSettings):
             object.__setattr__(self, "ALLOWED_ORIGINS", combined)
 
         # Automatically include FRONTEND_URL in ALLOWED_ORIGINS
-        if self.FRONTEND_URL and self.FRONTEND_URL not in self.ALLOWED_ORIGINS:
-            combined = list(dict.fromkeys(self.ALLOWED_ORIGINS + [self.FRONTEND_URL]))
+        # Strip trailing slash to match browser Origin header format
+        frontend = self.FRONTEND_URL.rstrip("/") if self.FRONTEND_URL else ""
+        if frontend and frontend not in self.ALLOWED_ORIGINS:
+            combined = list(dict.fromkeys(self.ALLOWED_ORIGINS + [frontend]))
             object.__setattr__(self, "ALLOWED_ORIGINS", combined)
 
         # Automatically include BACKEND_URL in ALLOWED_ORIGINS (for same-origin requests)
-        if self.BACKEND_URL and self.BACKEND_URL not in self.ALLOWED_ORIGINS:
-            combined = list(dict.fromkeys(self.ALLOWED_ORIGINS + [self.BACKEND_URL]))
+        backend = self.BACKEND_URL.rstrip("/") if self.BACKEND_URL else ""
+        if backend and backend not in self.ALLOWED_ORIGINS:
+            combined = list(dict.fromkeys(self.ALLOWED_ORIGINS + [backend]))
             object.__setattr__(self, "ALLOWED_ORIGINS", combined)
 
         # Production Environment Validation
