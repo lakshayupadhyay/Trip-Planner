@@ -375,16 +375,34 @@ const tripsAPI = {
   /**
    * Refine a single day with natural language instructions
    * POST /api/v1/itinerary/refine-day
-   * @param {Object} dayRefineData - { destination, day, instruction, travel_pace?, primary_vibe?, ... }
+   * Supports both object payload and positional arguments:
+   *   refineDay({ destination, day, instruction, ... })
+   *   refineDay(destination, day, instruction, optsOrDayNumber)
+   * @param {Object|string} destinationOrData - Payload object or destination string
+   * @param {Object} [day] - DayItinerary object (when using positional args)
+   * @param {string} [instruction] - Natural language instructions
+   * @param {Object|number} [extra] - Additional preferences or day index
    * @returns {Promise<Object>} DayItinerary
    */
-  refineDay: async (dayRefineData) => {
+  refineDay: async (destinationOrData, day = null, instruction = null, extra = {}) => {
+    let payload;
+    if (typeof destinationOrData === 'object' && destinationOrData !== null && !day) {
+      payload = destinationOrData;
+    } else {
+      payload = {
+        destination: destinationOrData,
+        day,
+        instruction,
+        ...(typeof extra === 'object' && extra !== null ? extra : {}),
+      };
+    }
+
     const response = await fetch(`${API_BASE_URL}/api/v1/itinerary/refine-day`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(dayRefineData),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {

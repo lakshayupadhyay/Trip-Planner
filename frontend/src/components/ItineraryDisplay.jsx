@@ -267,12 +267,16 @@ export default function ItineraryDisplay({
 
     setIsRefining(true);
     try {
-      const result = await tripsAPI.refineDay(
-        destinationName,
-        currentDay,
-        userText,
-        selectedDayIndex + 1
-      );
+      const payload = {
+        destination: destinationName,
+        day: currentDay,
+        instruction: userText,
+        travel_pace: trip?.travel_pace || 'moderate',
+        primary_vibe: trip?.primary_vibe || null,
+        secondary_vibes: trip?.secondary_vibes || [],
+        dietary_preferences: trip?.dietary_preferences || [],
+      };
+      const result = await tripsAPI.refineDay(payload);
 
       const updatedDays = [...days];
       updatedDays[selectedDayIndex] = result;
