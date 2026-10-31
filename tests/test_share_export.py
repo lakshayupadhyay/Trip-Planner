@@ -342,3 +342,46 @@ def test_trip_summary_missing_trip_returns_404():
     """Verify POST /api/v1/trips/{trip_id}/summary returns 404 for unknown trip."""
     response = client.post("/api/v1/trips/00000000-0000-0000-0000-000000000000/summary")
     assert response.status_code == 404
+
+
+def test_export_json_with_synchronous_itinerary_service(monkeypatch):
+    """
+    CRITICAL REGRESSION TEST:
+    Verify that export_trip_json works seamlessly when ItineraryService.get_itinerary_by_trip_id
+    is synchronous (normal production behavior), and does NOT crash with
+    'TypeError: object ItineraryResponse can't be used in await expression'.
+    """
+    trip = get_mock_trip("trip-sync-test")
+    itinerary = get_mock_itinerary("trip-sync-test")
+
+    # Use standard MagicMock (NOT AsyncMock) to emulate production sync ItineraryService
+    monkeypatch.setattr(share_service.trip_service, "get_trip_by_id", MagicMock(return_value=trip))
+    monkeypatch.setattr(share_service.itinerary_service, "get_itinerary_by_trip_id", MagicMock(return_value=itinerary))
+
+    response = client.get("/api/v1/trips/trip-sync-test/export/json")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["itinerary"] is not None
+    assert data["trip"]["has_itinerary"] is True
+    assert data["trip"]["status"] == "confirmed"
+    assert len(data["itinerary"]["days"]) == 1
+
+
+def test_export_json_when_no_itinerary_sets_pending_and_false(monkeypatch):
+    """
+    Verify that when no itinerary is found, has_itinerary is False,
+    status is 'pending', and itinerary is null (never fake or mismatched).
+    """
+    trip = get_mock_trip("trip-no-itin")
+    from fastapi import HTTPException
+
+    monkeypatch.setattr(share_service.trip_service, "get_trip_by_id", MagicMock(return_value=trip))
+    monkeypatch.setattr(share_service.itinerary_service, "get_itinerary_by_trip_id", MagicMock(side_effect=HTTPException(status_code=404, detail="No saved itinerary")))
+
+    response = client.get("/api/v1/trips/trip-no-itin/export/json")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["itinerary"] is None
+    assert data["trip"]["has_itinerary"] is False
+    assert data["trip"]["status"] == "pending"
+

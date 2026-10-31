@@ -209,7 +209,7 @@ class TripService:
                 day_num = row.get("day_number", 0)
                 act = row.get("activities") or {}
 
-                if day_num < 900:
+                if day_num < 900 and isinstance(act, dict) and not act.get("_is_preferences") and ("morning_activity" in act or "theme" in act):
                     has_itinerary = True
                     # If Day 1 has trip_metadata, extract vibes & pace
                     if "trip_metadata" in act:
@@ -233,6 +233,7 @@ class TripService:
 
         return {
             "has_itinerary": has_itinerary,
+            "status": "confirmed" if has_itinerary else "pending",
             "primary_vibe": primary_vibe,
             "secondary_vibes": secondary_vibes,
             "travel_style": travel_style,
@@ -276,7 +277,7 @@ class TripService:
                 "primary_vibe": attached["primary_vibe"],
                 "secondary_vibes": attached["secondary_vibes"],
                 "additional_requirements": attached["additional_requirements"],
-                "status": "pending",
+                "status": attached["status"],
                 "has_itinerary": attached["has_itinerary"],
                 "itinerary_regeneration_recommended": False,
                 "created_at": r.get("created_at"),
@@ -330,7 +331,7 @@ class TripService:
             "primary_vibe": attached["primary_vibe"],
             "secondary_vibes": attached["secondary_vibes"],
             "additional_requirements": attached["additional_requirements"],
-            "status": "pending",
+            "status": attached["status"],
             "has_itinerary": attached["has_itinerary"],
             "itinerary_regeneration_recommended": False,
             "created_at": r.get("created_at"),

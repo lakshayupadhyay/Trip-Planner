@@ -9,6 +9,7 @@ Generates comprehensive day-wise travel itineraries using pluggable LLM provider
 from __future__ import annotations
 
 import json
+import logging
 import re
 import uuid
 from typing import Any
@@ -21,6 +22,8 @@ from app.models.itinerary import (
 )
 from app.services.prompt_service import build_structured_itinerary_prompt
 from app.services.providers import LLMProvider, get_llm_provider
+
+logger = logging.getLogger(__name__)
 
 
 def _clean_json_text(text: str) -> str:
@@ -96,11 +99,13 @@ class ItineraryService:
         )
 
         # 2. Invoke AI Provider asynchronously
+        logger.info("Generating itinerary for destination '%s' using provider '%s'", request.destination, provider.name)
         try:
             raw_output = await provider.generate(prompt=prompt, system_prompt=system_prompt)
         except HTTPException:
             raise
         except Exception as exc:
+            logger.error("Provider '%s' failed during generation for destination '%s': %s", provider.name, request.destination, exc)
             raise HTTPException(
                 status_code=502,
                 detail=f"Failed to generate itinerary with provider '{provider.name}': {exc}",
@@ -111,6 +116,7 @@ class ItineraryService:
         try:
             parsed_data = json.loads(cleaned_json)
         except json.JSONDecodeError as exc:
+            logger.error("Provider '%s' returned invalid JSON for destination '%s'", provider.name, request.destination)
             raise HTTPException(
                 status_code=502,
                 detail=f"AI model did not return valid JSON. Error: {exc}. Output preview: {cleaned_json[:200]}",
@@ -165,6 +171,9 @@ class ItineraryService:
         resolved_trip_id = self._save_to_supabase(itinerary, request)
         if resolved_trip_id:
             itinerary.trip_id = str(resolved_trip_id)
+            logger.info("Itinerary successfully saved and linked to trip_id=%s", resolved_trip_id)
+        else:
+            logger.warning("Itinerary generated for '%s' but persistence was skipped or failed", request.destination)
 
         return itinerary
 
@@ -210,11 +219,12 @@ class ItineraryService:
 
         # Clean existing days for this trip if updating
         try:
-            self.db.table("itineraries").delete().eq("trip_id", str(trip_id)).execute()
-        except Exception:
-            pass
+            self.db.table("itineraries").delete().eq("trip_id", str(trip_id)).lt("day_number", 900).execute()
+        except Exception as exc:
+            logger.warning("Could not clear prior itineraries for trip %s: %s", trip_id, exc)
 
         # Insert each day into itineraries table with metadata on Day 1
+        persisted_days = 0
         try:
             for day in itinerary.days:
                 day_payload = day.model_dump()
@@ -239,11 +249,12 @@ class ItineraryService:
                     "activities": day_payload,
                 }
                 self.db.table("itineraries").insert(row_payload).execute()
+                persisted_days += 1
+            logger.info("Persisted %d itinerary days to Supabase for trip_id=%s", persisted_days, trip_id)
         except Exception as exc:
-            # Database storage failures shouldn't crash the generated response
-            pass
+            logger.error("Failed to persist itinerary days to Supabase for trip_id=%s: %s", trip_id, exc)
 
-        return str(trip_id)
+        return str(trip_id) if persisted_days > 0 else None
 
     def get_itinerary_by_trip_id(self, trip_id: str) -> ItineraryResponse:
         """
@@ -303,6 +314,7 @@ class ItineraryService:
             try:
                 days.append(DayItinerary(**act_data))
             except Exception as err:
+                logger.error("Failed to deserialize day %s for trip %s: %s", row.get("day_number"), trip_id, err)
                 raise HTTPException(
                     status_code=502,
                     detail=f"Failed to deserialize saved day itinerary {row.get('day_number')}: {err}",

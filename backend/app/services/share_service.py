@@ -13,11 +13,15 @@ Features:
 
 from __future__ import annotations
 
+import inspect
 import io
+import logging
 import secrets
 from datetime import datetime, timezone
 from typing import Any
 from fastapi import HTTPException
+
+logger = logging.getLogger(__name__)
 
 from app.models.share import (
     TripShareResponse,
@@ -57,6 +61,24 @@ class ShareService:
             from app.utils.supabase_client import supabase
             return supabase
         except Exception:
+            return None
+
+    async def _get_itinerary_safe(self, trip_id: str) -> Any:
+        """
+        Safely fetch saved itinerary for a trip.
+        Supports both synchronous ItineraryService (production) and AsyncMock (unit tests).
+        Logs clear warnings without exposing sensitive information.
+        """
+        try:
+            res = self.itinerary_service.get_itinerary_by_trip_id(trip_id)
+            if inspect.isawaitable(res):
+                return await res
+            return res
+        except HTTPException as http_exc:
+            logger.info("Saved itinerary lookup for trip %s returned HTTP %s: %s", trip_id, http_exc.status_code, http_exc.detail)
+            return None
+        except Exception as exc:
+            logger.warning("Unexpected error retrieving itinerary for trip %s: %s", trip_id, exc)
             return None
 
     # ── Share Management ────────────────────────────────────────────────────────
@@ -226,10 +248,7 @@ class ShareService:
             )
 
         # 4. Fetch saved itinerary
-        try:
-            itinerary = await self.itinerary_service.get_itinerary_by_trip_id(trip_id)
-        except Exception:
-            itinerary = None
+        itinerary = await self._get_itinerary_safe(trip_id)
 
         # Calculate duration days
         start_date_str = str(trip["start_date"])
@@ -273,10 +292,13 @@ class ShareService:
         Generate structured highlights and clipboard-copyable text summary.
         """
         trip = self.trip_service.get_trip_by_id(trip_id, user_id=user_id)
-        try:
-            itinerary = await self.itinerary_service.get_itinerary_by_trip_id(trip_id)
-        except Exception:
-            itinerary = None
+        itinerary = await self._get_itinerary_safe(trip_id)
+        if itinerary:
+            trip["has_itinerary"] = True
+            trip["status"] = "confirmed"
+        else:
+            trip["has_itinerary"] = False
+            trip["status"] = "pending"
 
         dest = trip["destination"]
         s_date = str(trip["start_date"])
@@ -352,11 +374,15 @@ class ShareService:
         Assemble complete trip and itinerary data into structured JSON matching Pydantic response models.
         """
         trip = self.trip_service.get_trip_by_id(trip_id, user_id=user_id)
-        try:
-            itinerary = await self.itinerary_service.get_itinerary_by_trip_id(trip_id)
+        itinerary = await self._get_itinerary_safe(trip_id)
+        if itinerary:
             itinerary_data = itinerary.model_dump()
-        except Exception:
+            trip["has_itinerary"] = True
+            trip["status"] = "confirmed"
+        else:
             itinerary_data = None
+            trip["has_itinerary"] = False
+            trip["status"] = "pending"
 
         return {
             "export_metadata": {
@@ -378,10 +404,13 @@ class ShareService:
         Includes cover header, trip overview, daily schedule, transit routes, and packing tips.
         """
         trip = self.trip_service.get_trip_by_id(trip_id, user_id=user_id)
-        try:
-            itinerary = await self.itinerary_service.get_itinerary_by_trip_id(trip_id)
-        except Exception:
-            itinerary = None
+        itinerary = await self._get_itinerary_safe(trip_id)
+        if itinerary:
+            trip["has_itinerary"] = True
+            trip["status"] = "confirmed"
+        else:
+            trip["has_itinerary"] = False
+            trip["status"] = "pending"
 
         return self._build_pdf_bytes(trip=trip, itinerary=itinerary)
 
