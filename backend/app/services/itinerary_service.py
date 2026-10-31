@@ -15,6 +15,7 @@ from typing import Any
 from fastapi import HTTPException
 
 from app.models.itinerary import (
+    DayItinerary,
     ItineraryGenerateRequest,
     ItineraryResponse,
 )
